@@ -18,6 +18,7 @@ unsigned int hashTable::getPrime( int size ){
     primes.push_back(4114741);
     primes.push_back(8487821);
 
+    int i = 0;
     while(primes[i] <= size) i++;
 
     return primes[i];
@@ -97,7 +98,7 @@ int hashTable::findPos(const string &key){
 
         //if this item has not been inserted and current index number is occupied, 
         //then using linear probe to locate next index location
-        i++
+        index++;
     }
 
     return -1; //-1 means failed to locate index, or cannot locate new index
@@ -128,9 +129,11 @@ bool hashTable::rehash(){
             if((oldTable[i].isOccupied == true) && (oldTable[i].isDeleted == false))
                 insert(oldTable[i].key, NULL);
         }
+        
+        return true;
     }
     catch( exception &error) {
-        cerr << "Rehash failed: " << e.what() << endl;
+        cerr << "Rehash failed: " << error.what() << endl;
         return false;
     }
 }

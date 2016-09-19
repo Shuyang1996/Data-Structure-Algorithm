@@ -33,10 +33,12 @@ void spellCheck(ifstream &input, ofstream &output){
 	while( getline( input, inputWord) ) {
 		transform( inputWord.begin(), inputWord.end(), inputWord.begin(), ::tolower);
 
-		// need to dig into this
+		//ture character seperator into white space for the upcoming string stream object
 		for(int i = 0; i < inputWord.size(); i++ ) {
 			character = (int) inputWord[i];
-			if()
+			if( (character == 39) || (character == 45) || (character == 92) || (character == 32)  || ((character < 58) && (character > 47)) || ( (character < 123) && (character > 96) ) )
+				;
+			else inputWord[i]=' ';
 		}
 
 		stringstream streamObject(inputWord);
@@ -91,7 +93,7 @@ int main (){
 	// user prompt for entering input file
 	cout << "Enter name of input file: ";
 	cin >> name;
-	ifstream inputFile ( name.c_tr() );
+	ifstream inputFile ( name.c_str() );
 	if( !inputFile ){
 		cerr << "Cannot open: " << inputFile << endl;
 		exit(1);
