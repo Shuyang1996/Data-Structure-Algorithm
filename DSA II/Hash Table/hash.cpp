@@ -24,6 +24,8 @@ unsigned int hashTable::getPrime( int size ){
     return primes[i];
 }
 
+
+//initialize the hash table
 hashTable::hashTable(int size){ //constructor
     
     filled = 0;
@@ -77,7 +79,7 @@ int hashTable::insert(const string &key, void *pv ){
         data[index].key = key;
         data[index].isOccupied = true;
         data[index].isDeleted = false;
-        data[index].pv = pv;
+        data[index].pv = NULL;
         filled++;
         return 0;
     }
@@ -127,7 +129,7 @@ bool hashTable::rehash(){
         
         for(int i=0; i < oldTable.size(); i++){
             if((oldTable[i].isOccupied == true) && (oldTable[i].isDeleted == false))
-                insert(oldTable[i].key, NULL);
+                insert(oldTable[i].key);
         }
         
         return true;

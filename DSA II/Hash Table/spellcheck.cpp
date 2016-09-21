@@ -33,9 +33,12 @@ void spellCheck(ifstream &input, ofstream &output){
 	while( getline( input, inputWord) ) {
 		transform( inputWord.begin(), inputWord.end(), inputWord.begin(), ::tolower);
 
-		//ture character seperator into white space for the upcoming string stream object
+		//turn character seperator into white space for the upcoming string stream object
 		for(int i = 0; i < inputWord.size(); i++ ) {
 			character = (int) inputWord[i];
+
+			//turn character into integers, and using ASCII table value to see what character we are pointing at
+			// 39 => '  , 45 => -  , 92 => \ ,  32 => [white space]
 			if( (character == 39) || (character == 45) || (character == 92) || (character == 32)  || ((character < 58) && (character > 47)) || ( (character < 123) && (character > 96) ) )
 				;
 			else inputWord[i]=' ';
@@ -43,6 +46,7 @@ void spellCheck(ifstream &input, ofstream &output){
 
 		stringstream streamObject(inputWord);
 		
+		//using string stream object, put one word in "single word" each time
 		while( streamObject >> singleWord ) { //check each word by using streamstring class object
 			isNumber = false;
 			for(int i = 0; i < singleWord.size(); i++) {
@@ -65,11 +69,14 @@ void spellCheck(ifstream &input, ofstream &output){
 }
 
 int main (){
+	
+	//prompt user for entering file name
+
 	string name; //name for dictionary
 	cout <<"Enter name of dictionary: ";
 	cin >> name;
 
-	//create input stream
+	//create input dictionary stream
 	ifstream dict (name.c_str());
 
 	if(!dict){
@@ -123,17 +130,3 @@ int main (){
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
