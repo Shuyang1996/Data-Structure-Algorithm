@@ -38,8 +38,8 @@ void spellCheck(ifstream &input, ofstream &output){
 			character = (int) inputWord[i];
 
 			//turn character into integers, and using ASCII table value to see what character we are pointing at
-			// 39 => '  , 45 => -  , 92 => \ ,  32 => [white space]
-			if( (character == 39) || (character == 45) || (character == 92) || (character == 32)  || ((character < 58) && (character > 47)) || ( (character < 123) && (character > 96) ) )
+			// 39 => '  , 45 => - ,  32 => [white space]
+			if( (character == 39) || (character == 45) || (character == 32)  || ((character < 58) && (character > 47)) || ( (character < 123) && (character > 96) ) )
 				;
 			else inputWord[i]=' ';
 		}
