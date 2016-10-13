@@ -140,4 +140,27 @@ bool hashTable::rehash(){
     }
 }
 
+void *hashTable::getPointer( const std::string &key, bool *b ) {
+    int idx = findPos( key );
+
+    if( idx != -1 && !data[idx].isDeleted ) {
+        *b = true;
+        return data[idx].pv;
+    }
+
+    *b = false;
+    return NULL;
+}
+
+int hashTable::setPointer( const std::string &key, void *pv ) {
+    int idx = findPos( key );
+
+    if( idx == -1 )
+        return 1;
+
+    data[idx].pv = pv;
+
+    return 0;
+}
+
 
