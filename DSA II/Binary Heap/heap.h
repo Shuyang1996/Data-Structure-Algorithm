@@ -1,14 +1,16 @@
 #ifndef _HEAP_H
 #define _HEAP_H
 
+#include "hash.h"
 #include <vector>
 #include <string>
+
 
 class heap {
 	
 	public: 
 
-		heap( int capacity ) 
+		heap( int capacity );
 
 		// insert - Inserts a new node into the binary heap
 		
@@ -75,8 +77,8 @@ class heap {
 		int capacity;
 		int currentSize;
 		
-		std:: vector<node> data;
-		hashTable * map;
+		std:: vector <node> data;
+		hashTable * hashMap;
 
 
 		int getPosition(node * ptr);
