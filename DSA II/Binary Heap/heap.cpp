@@ -10,6 +10,7 @@ heap::heap (int capacity) {
 
 //percolateUp function
 void heap::percolateUp( int key ) {
+	//create a hole
 	node hole = data[key];
 
 	//position of parent node of each node is also at i/2
@@ -29,7 +30,30 @@ void heap::percolateUp( int key ) {
 //percolateDown function
 
 void heap::percolateDown( int key ) {
+	node hole = data[key]; // this will 
+	int tmp;
 
+	while( ( key * 2) <= currentSize ) { //check if we have put the last element into proper position
+		tmp = key * 2;
+
+		if( tmp != filled && data[tmp+1].key < data[tmp].key ) tmp++; // push smaller value item into hole, and push hole one level below
+
+		if( data[tmp].key < hole.key ) {
+
+			//swap;
+			data[key] = data[tmp];
+			hashMap->setPointer(data[key],id, &data[key] );
+		} else 
+			break;
+
+		//update new position and repeat percolate procedure again
+		key = tmp;
+
+	}
+
+	// swap the value
+	data[key] = hole;
+	hashMap->setPointer(data[key].id, &data[key] );
 }
 
 // Returns true if the given index needs to be percolated up 
@@ -63,3 +87,86 @@ int heap::insert (const std:string &id, int key, void *pv ) {
     return 0; // return 0 means successfully insert an item
 
 }
+
+//delete the node with the specified id from the binary heap
+int deleteMin(std::string *pId = NULL, int *pKey = NULL, void *ppData = NULL){
+	if(currentSize == 0) {
+		return 1; //cannot remove element if current heap is 0
+	}
+
+	if( pId )
+        *pId = data[1].id; // id of root element
+    if( pKey )
+        *pKey = data[1].key; // key of root element
+	if( ppData )
+		*(static_cast<void **> (ppData)) = data[1].pData;
+
+    // Remove first item and replace with last
+    // then percoalteDown
+    hashMap->remove( data[1].id );
+    data[1] = data[currentSize--];
+    hashMap->setPointer( data[1].id, &data[1] );
+    percolateDown( 1 );
+
+    return 0;
+
+}
+
+int setKey(const std::string &id, int key) {
+	bool exist = false;
+	node *pn = static_cast<node *> ( hashMap->getPointer( id, &exist ) );
+
+	if( !exist )
+		return 1;
+
+	//find position
+    int index = getPosition( pn );
+
+    //update new key
+    data[index].key = key;
+    
+    // after update the key value on of this item, check if we need to move this item up/down to a proper position
+    if( needPercolateDown( index ) )
+        percolateDown( index );
+    else if( needPercolateUp( index ) )
+        percolateUp( index );
+
+    return 0;
+}
+
+int remove(const std::string &id, int *pKey = NULL, void *ppData = NULL){
+	bool exist = false;
+	node *pn = static_cast<node *> ( hashMap->getPointer( id, &exist ) );
+
+	if( !exist )
+		return 1;
+
+    int index = getPosition( pn );
+
+    // update pKey and ppData value if they are given
+    if( pKey )
+        *pKey = data[index].key;
+	if( ppData )
+		*(static_cast<void **> (ppData)) = data[index].pData;
+
+    hashMap->remove( data[index].id );
+    data[index] = data[filled--];
+
+    
+    if( currentSize == 0 )
+        return 0;
+
+    // Update pointer 
+    map->setPointer( data[index].id, &data[index] );
+
+    // Perform appropriate percolate
+    if( needPercolateDown( index ) )
+        percolateDown( index );
+    else if( needPercolateUp( index ) )
+        percolateUp( index );
+
+    return 0;
+}
+
+
+

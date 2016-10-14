@@ -101,6 +101,7 @@ int hashTable::findPos(const string &key){
         //if this item has not been inserted and current index number is occupied, 
         //then using linear probe to locate next index location
         index++;
+        index %= capacity;
     }
 
     return -1; //-1 means failed to locate index, or cannot locate new index
@@ -140,6 +141,8 @@ bool hashTable::rehash(){
     }
 }
 
+
+
 void *hashTable::getPointer( const std::string &key, bool *b ) {
     int idx = findPos( key );
 
@@ -163,4 +166,14 @@ int hashTable::setPointer( const std::string &key, void *pv ) {
     return 0;
 }
 
+bool hashTable::remove( const std::string &key ) {
+    int idx = findPos( key );
+
+    if( idx == -1 )
+        return false;
+
+    data[idx].isDeleted = true;
+
+    return true;
+}
 
