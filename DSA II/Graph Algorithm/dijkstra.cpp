@@ -24,24 +24,42 @@ int main () {
 	}
 
 	//create graph based on input file
-	graph g (input); // need to revise on this one
+	graph directedGraph (input); // need to revise on this one
 
 	//enter starting vertex
+	for( ;; ) {
+		cout >> "Enter a valid vertex id for the starting vertex: ";
+		cin >> buf;
+		if( directedGraph.isVertex(buf) )  break; // if the entered vertex is valid then exit this for loop;
 
+		//if the entered vertex is not valid, then execute the code below
+		// clear cin and then skips to the next new line
+		cin.clear(); 
+		cin.ignore( 10000, '\n');
+
+	}
 
 	//calculate time
 	clock_t t1 = clock();
-	g.dijkstra(buf);
+	directedGraph.dijkstra(buf);
 	clock_t t2 = clock();
 
 	double time = ( (double) (t2 - t1) ) / CLOCKS_PER_SEC;
 
-
 	// prompt for output file
+	cout << "Enter name of output file: ";
+	cin >> buf;
 
+	//open output file
+	ofstream output ( buf.c_str() );
+
+	if ( !output.is_open() ) {
+		cout << "File \"" << buf << "\" was not found." << endl;
+		exit(1);
+	}
 
 	//write to output file
-
+	directedGraph.write(output);
 
 	return 0;
 }
