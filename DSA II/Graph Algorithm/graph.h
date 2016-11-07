@@ -22,9 +22,6 @@ class graph {
 		//dijkstra algorithm (what is src in this case? )
 		void dijkstra( string source );
 
-		//print result to output file
-		void print( ofstream &output );
-
 		//write graph to a specific output file
 		void write( ofstream &output );
 
@@ -49,9 +46,9 @@ class graph {
 		class vertex {
 			public:
 				string name;
-				list < edge * > adjacent;
-				vertex * prev;
-				bool isKnown;
+				list < edge * > adjacent; //ajacent edges associated with each vertex
+				vertex * prev; // previous vertex that leads to this vertex
+				bool known;
 				int distance;
 		};
 

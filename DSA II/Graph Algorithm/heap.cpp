@@ -92,7 +92,7 @@ int heap::insert (const std::string &id, int key, void *pv ) {
 
 }
 
-//delete the node with the specified id from the binary heap
+//deleteMin
 int heap::deleteMin(std::string *pId, int *pKey, void *ppData){
 	if(currentSize == 0) {
 		return 1; //cannot remove element if current heap is 0
