@@ -56,10 +56,8 @@ int hashTable::insert(const string &key, void *pv ){
     
     if(filled > (capacity/2) ) { //cut of as half of capacity to rehash
         
-        if( rehash() ) {
-            return 0; //success
-        }else {
-            return 2; //failure
+        if( !rehash() ) {
+            return 2; //success
         }
     }
 
