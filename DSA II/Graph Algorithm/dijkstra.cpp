@@ -1,10 +1,10 @@
+#include "graph.h"
+
 #include <string>
 #include <fstream>
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
-
-#include "graph.h"
 
 using namespace std;
 
@@ -24,18 +24,17 @@ int main () {
 	}
 
 	//create graph based on input file
-	graph directedGraph (input); // need to revise on this one
-
+	graph directedGraph (graphFile); 
 	//enter starting vertex
 	for( ;; ) {
-		cout >> "Enter a valid vertex id for the starting vertex: ";
+		cout << "Enter a valid vertex id for the starting vertex: ";
 		cin >> buf;
 		if( directedGraph.isVertex(buf) )  break; // if the entered vertex is valid then exit this for loop;
 
 		//if the entered vertex is not valid, then execute the code below
 		// clear cin and then skips to the next new line
 		cin.clear(); 
-		cin.ignore( 10000, '\n');
+		cin.ignore( 1000, '\n');
 
 	}
 
@@ -45,10 +44,12 @@ int main () {
 	clock_t t2 = clock();
 
 	double time = ( (double) (t2 - t1) ) / CLOCKS_PER_SEC;
+	cout << "Total time (in seconds) to apply Dijkstra's algorithm: " << time << endl;
 
 	// prompt for output file
 	cout << "Enter name of output file: ";
 	cin >> buf;
+
 
 	//open output file
 	ofstream output ( buf.c_str() );

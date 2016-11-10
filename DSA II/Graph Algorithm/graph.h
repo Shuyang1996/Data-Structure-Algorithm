@@ -1,5 +1,8 @@
-#ifdef _GRAPH_H
+#ifndef _GRAPH_H
 #define _GRAPH_H
+
+#include "hash.h"
+#include "heap.h"
 
 #include <iostream>
 #include <vector>
@@ -8,16 +11,13 @@
 #include <sstream>
 #include <fstream>
 
-#include "hash.h"
-#include "heap.h"
-
 using namespace std;
 
 class graph {
 
 	public:
 		//initial constructor
-		graph ( ifstream &input )
+		graph ( ifstream &input );
 
 		//dijkstra algorithm (what is src in this case? )
 		void dijkstra( string source );
@@ -26,6 +26,7 @@ class graph {
 		void write( ofstream &output );
 
 		//check if a given string a vertex in the graph
+		bool isVertex( string name );
 
 	private:
 		//adds a vertex to the graph and return false if this vertex has been processed already
@@ -57,8 +58,7 @@ class graph {
 
 		//hash table for a vertex to ptr lookup
 		hashTable * vertexLookup;
-
 };
 
-
-#endif 
+ 
+#endif //_GRAPH_H

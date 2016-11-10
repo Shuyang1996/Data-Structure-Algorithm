@@ -79,7 +79,7 @@ int hashTable::insert(const string &key, void *pv ){
         data[index].key = key;
         data[index].isOccupied = true;
         data[index].isDeleted = false;
-        data[index].pv = NULL;
+        data[index].pv = pv;
         filled++;
         return 0;
     }
@@ -130,7 +130,7 @@ bool hashTable::rehash(){
         
         for(int i=0; i < oldTable.size(); i++){
             if((oldTable[i].isOccupied == true) && (oldTable[i].isDeleted == false))
-                insert(oldTable[i].key);
+                insert(oldTable[i].key, oldTable[i].pv);
         }
         
         return true;
@@ -143,7 +143,7 @@ bool hashTable::rehash(){
 
 
 
-void *hashTable::getPointer( const std::string &key, bool *b ) {
+void * hashTable::getPointer( const std::string &key, bool *b ) {
     int index = findPos( key );
 
     if( index != -1 && !data[index].isDeleted ) {
