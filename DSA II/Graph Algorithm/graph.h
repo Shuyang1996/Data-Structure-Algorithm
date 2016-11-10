@@ -5,6 +5,7 @@
 #include "heap.h"
 
 #include <iostream>
+#include <climits>
 #include <vector>
 #include <list>
 #include <string>
