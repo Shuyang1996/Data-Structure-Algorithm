@@ -174,4 +174,3 @@ bool hashTable::remove( const std::string &key ) {
 
     return true;
 }
-
