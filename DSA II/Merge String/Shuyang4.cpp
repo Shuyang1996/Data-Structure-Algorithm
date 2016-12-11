@@ -12,8 +12,41 @@ using namespace std;
 #define MAX 1001
 
 int arr[MAX][MAX] = {0}; //initialize matrix
+string checker( string *str );
 
-//
+
+int main () {
+
+	string str[3]; // store three input strings
+	string buffer; // temprorary storage area
+
+	cout << "Enter name of input file: "; // prompt for input and output files, return 1 if failure ocurred.
+	cin >> buffer;
+	ifstream input( buffer.c_str() );
+
+	if( !input.is_open() ) { // opening input file failed
+		cout << "File \"" << buffer <<"\" was not found." << endl;
+		return 1;
+	}
+
+	cout << "Enter name of output file: "; //prompt for input and output files, return 2 if failure ocurred
+	cin >> buffer;
+	ofstream output( buffer.c_str() );
+	if( !output.is_open() ) {
+		cout << "Unable to open output file \"" << buffer << "\""<< endl;
+		return 2; 
+	}
+
+	while( getline(input, str[A]) && getline(input, str[B]) && getline(input,str[C]) ) {
+		cout << checker(str) << endl;
+	}
+
+	input.close();
+	output.close();
+
+}
+
+// string merge checker
 string checker( string *str ) {
 	int length[3] = { str[A].length(), str[B].length(), str[C].length() };
 	
@@ -49,35 +82,6 @@ string checker( string *str ) {
         }
 	}
 
-};
-
-int main () {
-
-	string str[3]; // store three input strings
-	string buffer; // temprorary storage area
-
-	cout << "Enter name of input file: "; // prompt for input and output files, return 1 if failure ocurred.
-	cin >> buffer;
-	ifstream input( buffer.c_str() );
-
-	if( !input.is_open() ) { // opening input file failed
-		cout << "File \"" << buffer <<"\" was not found." << endl;
-		return 1;
-	}
-
-	cout << "Enter name of output file: "; //prompt for input and output files, return 2 if failure ocurred
-	cin >> buffer;
-	ofstream output( buffer.c_str() );
-	if( !output.is_open() ) {
-		cout << "Unable to open output file \"" << buffer << "\""<< endl;
-		return 2; 
-	}
-
-	while( getline(input, str[A]) && getline(input, str[B]) && getline(input,str[C]) ) {
-		cout << checker(str) << endl;
-	}
-
-	input.close();
-	output.close();
+	return str[C];
 
 }
