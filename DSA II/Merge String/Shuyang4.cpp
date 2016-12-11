@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <stdlib.h>
 
 using namespace std;
 
@@ -13,7 +12,6 @@ using namespace std;
 
 int arr[MAX][MAX] = {0}; //initialize matrix
 string checker( string *str );
-
 
 int main () {
 
@@ -38,20 +36,22 @@ int main () {
 	}
 
 	while( getline(input, str[A]) && getline(input, str[B]) && getline(input,str[C]) ) {
-		cout << checker(str) << endl;
+		output << checker(str) << endl;
 	}
 
 	input.close();
 	output.close();
 
+	return 0;
 }
 
 // string merge checker
 string checker( string *str ) {
+	
 	int length[3] = { str[A].length(), str[B].length(), str[C].length() };
 	
 	// basic check: merged string size, if it is not correct, end program immediately in order to save time and memory.
-	if ( str[A] + str[B] != str[C] )  return "*** NOT A MERGE ***";
+	if ( (length[A] + length[B]) != length[C] )  return "*** NOT A MERGE ***";
 	
 
 	//initialize array
@@ -72,10 +72,12 @@ string checker( string *str ) {
 
 	// Trace path backwards
 
-	while (length[A] > 0 && length[B] > 0 ) {
+	while (length[A] > 0 && length[B] >= 0 ) {
+		
 		if( arr[length[A]][length[B]] == 1 && ( length[B] == 0 || arr[length[A]][length[B]-1] == 0 ) ) {
             str[C][length[A]+length[B]-1] = toupper( str[C][length[A]+length[B]-1] );
             length[A]--;
+
         } else {
             str[C][length[A]+length[B]-1] = tolower( str[C][length[A]+length[B]-1] );
             length[B]--;
@@ -83,5 +85,4 @@ string checker( string *str ) {
 	}
 
 	return str[C];
-
 }
